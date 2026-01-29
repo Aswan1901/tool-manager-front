@@ -29,7 +29,7 @@ export default async function Dashboard(props: {
 
 
             <div className="mt-6 flex gap-4">
-$                <StatCard
+                <StatCard
                     icon={<TrendingUp className="inline-block rounded-full bg-gradient-to-r from-green-400 to-blue-500 p-1" />}
                     title="Monthly Budget"
                     value={`€${budget.current_month_total} / €${budget.monthly_limit}`}
