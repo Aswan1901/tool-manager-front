@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Row from "./Row"
 import PaginationWithLinks from "./PaginationComponent"
+import {SquarePen, Trash2, Eye} from "lucide-react";
 
 export default function ToolsTable({
                                        query,
@@ -45,6 +46,7 @@ export default function ToolsTable({
                         <th>Users</th>
                         <th>Monthly Cost</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -56,6 +58,8 @@ export default function ToolsTable({
                             users={tool.active_users_count}
                             cost={tool.monthly_cost}
                             status={tool.status}
+
+
                         />
                     ))}
                     </tbody>
@@ -73,10 +77,10 @@ export default function ToolsTable({
                             <span className="font-semibold text-white">{tool.name}</span>
                             <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
                                 tool.status === "active"
-                                    ? "bg-green-500/20 text-green-400"
-                                    : tool.status === "inactive"
-                                        ? "bg-red-500/20 text-red-400"
-                                        : "bg-yellow-500/20 text-yellow-400"
+                                    ? "bg-gradient-to-r from-green-400 to-blue-500 p-1"
+                                    : tool.status === "unused"
+                                        ? "bg-gradient-to-r from-pink-400 to-red-500"
+                                        : "bg-gradient-to-r from-orange-400 to-red-500"
                             }`}>
                                 {tool.status}
                             </span>
@@ -90,6 +94,17 @@ export default function ToolsTable({
 
                             <span>Monthly Cost</span>
                             <span className="text-white text-right">€{tool.monthly_cost}</span>
+                        </div>
+                        <div className="flex justify-end gap-3 border-t border-zinc-800 pt-3">
+                            <button className="text-zinc-400 hover:text-white transition-colors">
+                                <SquarePen className="size-5" />
+                            </button>
+                            <button className="text-zinc-400 hover:text-blue-400 transition-colors">
+                                <Eye className="size-5" />
+                            </button>
+                            <button className="text-zinc-400 hover:text-red-400 transition-colors">
+                                <Trash2 className="size-5" />
+                            </button>
                         </div>
                     </div>
                 ))}

@@ -1,3 +1,5 @@
+import {Trash2, SquarePen, Eye} from "lucide-react"
+
 export default function Row({id,tool, dept, users, cost, status}: {
     id: number;
     tool: string
@@ -23,6 +25,19 @@ export default function Row({id,tool, dept, users, cost, status}: {
             <span className={`rounded-full px-3 py-1 text-xs font-semibold ${statusStyles[status]}`}>
               {status}
             </span>
+            </td>
+            <td className="py-4 flex justify-center">
+                <div className="flex justify-end gap-3">
+                    <button className="text-zinc-400 hover:text-white transition-colors">
+                        <SquarePen className="size-5" />
+                    </button>
+                    <button className="text-zinc-400 hover:text-blue-400 transition-colors">
+                        <Eye className="size-5" />
+                    </button>
+                    <button className="text-zinc-400 hover:text-red-400 transition-colors">
+                        <Trash2 className="size-5" />
+                    </button>
+                </div>
             </td>
         </tr>
     )

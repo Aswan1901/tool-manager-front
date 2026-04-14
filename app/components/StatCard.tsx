@@ -1,10 +1,11 @@
 import { ReactNode } from "react"
+import ProgressBar from "@/app/components/progressBar";
+import {current} from "immer";
 
-export default function StatCard({
-title, value, sub,icon}: {
+export default function StatCard({title, value, stat,icon}: {
     title: string
     value: string
-    sub: ReactNode
+    stat: ReactNode
     icon: ReactNode
 }) {
     return (
@@ -15,7 +16,7 @@ title, value, sub,icon}: {
             </div>
             <div className="mt-4 text-2xl font-bold">{value}</div>
             <div>
-                {sub}
+                {stat}
             </div>
         </div>
     )
