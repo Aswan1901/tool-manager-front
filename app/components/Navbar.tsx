@@ -65,9 +65,9 @@ function UserDropdown() {
 
             {open && (
                 <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 z-50 border border-white/10">
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5">Your profile</a>
+                    <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5">Profile</a>
                     <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5">Settings</a>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5">Sign out</a>
+                    <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5">Logout</a>
                 </div>
             )}
         </div>

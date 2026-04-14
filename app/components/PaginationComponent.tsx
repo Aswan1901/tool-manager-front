@@ -187,7 +187,7 @@ export default function PaginationWithLinks({
     };
 
     return (
-        <div className="flex flex-col md:flex-row items-center gap-3 w-full">
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
             {pageSizeSelectOptions && (
                 <div className="flex flex-col gap-4 flex-1">
                     <SelectRowsPerPage
