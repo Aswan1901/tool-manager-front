@@ -20,6 +20,8 @@ export default function ToolsPage () {
 
     const searchParams = useSearchParams();
     const query = searchParams.get("query") || "";
+    const statusParam = searchParams.get("status") || "";
+    const statuses = statusParam ? statusParam.split(",") : [];
     const minPrice = Number(searchParams.get("minPrice") || 0);
     const maxPrice = Number(searchParams.get("maxPrice") || 10000);
     const img = {
@@ -49,14 +51,16 @@ export default function ToolsPage () {
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {toolsData.filter((tool) =>
                         tool.name.toLowerCase().includes(query.toLowerCase()) ||
-                        tool.owner_department.toLowerCase().includes(query.toLowerCase()) ||
-                        tool.status.toLowerCase().includes(query.toLowerCase())
+                        tool.owner_department.toLowerCase().includes(query.toLowerCase())
+
                     )
                     .filter((tool) =>
                         tool.monthly_cost >= minPrice && tool.monthly_cost <= maxPrice
                     )
                     .filter((tool) =>
-                        tool.status.toLowerCase().includes(query.toLowerCase())
+                        statuses.length === 0
+                            ? true
+                            : statuses.includes(tool.status.toLowerCase())
                     )
                     .map((tool) => {
                         const formatedDate = tool.updated_at ? tool.updated_at.split("T")[0] : "-";
