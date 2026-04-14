@@ -4,6 +4,7 @@ import { Zap, Bell, Moon, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
+import Search from './Search';
 
 const links = [
     { name: 'Dashboard', href: '/dashboard'},
@@ -31,8 +32,11 @@ function NavLinks() {
                     >
                         <p className="hidden md:block">{link.name}</p>
                     </Link>
-                );
+
+
+            );
             })}
+            <Search placeholder="Search tools..." />
         </>
     );
 }
