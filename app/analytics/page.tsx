@@ -20,6 +20,7 @@ export default function AnalyticsPage() {
             const res = await fetch("https://tt-jsonserver-01.alt-tools.tech/analytics");
             const json = await res.json();
             setData(json);
+            console.log(json);
         }
         fetchAnalytics();
     }, []);
