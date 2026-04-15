@@ -34,13 +34,13 @@ export interface PaginationWithLinksProps {
 }
 
 export default function PaginationWithLinks({
-                                        pageSizeSelectOptions,
-                                        pageSize,
-                                        totalCount,
-                                        page,
-                                        pageSearchParam,
-                                        navigationMode = "link",
-                                    }: PaginationWithLinksProps) {
+                                                pageSizeSelectOptions,
+                                                pageSize,
+                                                totalCount,
+                                                page,
+                                                pageSearchParam,
+                                                navigationMode = "link",
+                                            }: PaginationWithLinksProps) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -51,7 +51,6 @@ export default function PaginationWithLinks({
     const buildLink = useCallback(
         (newPage: number) => {
             const key = pageSearchParam || "page";
-            if (!searchParams) return `${pathname}?${key}=${newPage}`;
             const newSearchParams = new URLSearchParams(searchParams);
             newSearchParams.set(key, String(newPage));
             return `${pathname}?${newSearchParams.toString()}`;
@@ -76,13 +75,12 @@ export default function PaginationWithLinks({
             const key = pageSizeSelectOptions?.pageSizeSearchParam || "pageSize";
             const newSearchParams = new URLSearchParams(searchParams || undefined);
             newSearchParams.set(key, String(newPageSize));
-            newSearchParams.delete(pageSearchParam || "page"); // Clear the page number when changing page size
+            newSearchParams.delete(pageSearchParam || "page");
+
             const url = `${pathname}?${newSearchParams.toString()}`;
 
             if (navigationMode === "router") {
-                startTransition(() => {
-                    router.push(url);
-                });
+                startTransition(() => router.push(url));
             } else {
                 router.push(url);
             }
@@ -95,34 +93,36 @@ export default function PaginationWithLinks({
         const maxVisiblePages = 5;
 
         const createPageItem = (pageNum: number) => {
+            const isActive = page === pageNum;
+
+            const className = cn(
+                "cursor-pointer transition-all rounded-md px-3 py-1",
+                isActive
+                    ? "bg-zinc-900 text-white dark:bg-white dark:text-black"
+                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            );
+
             if (navigationMode === "router") {
                 return (
                     <PaginationItem key={pageNum}>
                         <PaginationLink
                             onClick={() => navigateToPage(pageNum)}
-                            isActive={page === pageNum}
-                            className={cn(
-                                "cursor-pointer",
-                                isPending && "pointer-events-none opacity-50"
-                            )}
-                            aria-disabled={isPending}
-                        >
-                            {pageNum}
-                        </PaginationLink>
-                    </PaginationItem>
-                );
-            } else {
-                return (
-                    <PaginationItem key={pageNum}>
-                        <PaginationLink
-                            href={buildLink(pageNum)}
-                            isActive={page === pageNum}
+                            isActive={isActive}
+                            className={cn(className, isPending && "opacity-50 pointer-events-none")}
                         >
                             {pageNum}
                         </PaginationLink>
                     </PaginationItem>
                 );
             }
+
+            return (
+                <PaginationItem key={pageNum}>
+                    <PaginationLink href={buildLink(pageNum)} isActive={isActive} className={className}>
+                        {pageNum}
+                    </PaginationLink>
+                </PaginationItem>
+            );
         };
 
         if (totalPageCount <= maxVisiblePages) {
@@ -135,7 +135,7 @@ export default function PaginationWithLinks({
             if (page > 3) {
                 items.push(
                     <PaginationItem key="ellipsis-start">
-                        <PaginationEllipsis />
+                        <PaginationEllipsis className="text-zinc-400 dark:text-zinc-600" />
                     </PaginationItem>
                 );
             }
@@ -150,7 +150,7 @@ export default function PaginationWithLinks({
             if (page < totalPageCount - 2) {
                 items.push(
                     <PaginationItem key="ellipsis-end">
-                        <PaginationEllipsis />
+                        <PaginationEllipsis className="text-zinc-400 dark:text-zinc-600" />
                     </PaginationItem>
                 );
             }
@@ -162,110 +162,70 @@ export default function PaginationWithLinks({
     };
 
     return (
-        <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full ">
             {pageSizeSelectOptions && (
-                <div className="flex flex-col gap-4 flex-1">
-                    <SelectRowsPerPage
-                        options={pageSizeSelectOptions.pageSizeOptions}
-                        setPageSize={navToPageSize}
-                        pageSize={pageSize}
-                    />
+                <div className="flex items-center gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+                    <span>Rows per page</span>
+
+                    <Select
+                        value={String(pageSize)}
+                        onValueChange={(value) => navToPageSize(Number(value))}
+                    >
+                        <SelectTrigger className="w-[120px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+                            <SelectValue placeholder="Select page size" />
+                        </SelectTrigger>
+
+                        <SelectContent>
+                            {pageSizeSelectOptions.pageSizeOptions.map((option) => (
+                                <SelectItem key={option} value={String(option)}>
+                                    {option}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
             )}
-            <Pagination className={cn({ "md:justify-end": pageSizeSelectOptions })}>
-                <PaginationContent className="max-sm:gap-0">
+
+            <Pagination className="w-full flex justify-center justify-center">
+                <PaginationContent className="max-sm:gap-1">
                     {isPending && navigationMode === "router" && (
                         <PaginationItem>
-                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <Loader2 className="h-4 w-4 animate-spin text-zinc-500" />
                         </PaginationItem>
                     )}
+
+                    {/* PREVIOUS */}
                     <PaginationItem>
-                        {navigationMode === "router" ? (
-                            <PaginationPrevious
-                                onClick={() => navigateToPage(Math.max(page - 1, 1))}
-                                aria-disabled={page === 1 || isPending}
-                                tabIndex={page === 1 || isPending ? -1 : undefined}
-                                className={cn(
-                                    page === 1 || isPending
-                                        ? "pointer-events-none opacity-50"
-                                        : "cursor-pointer"
-                                )}
-                            />
-                        ) : (
-                            <PaginationPrevious
-                                href={buildLink(Math.max(page - 1, 1))}
-                                aria-disabled={page === 1}
-                                tabIndex={page === 1 ? -1 : undefined}
-                                className={
-                                    page === 1 ? "pointer-events-none opacity-50" : undefined
-                                }
-                            />
-                        )}
+                        <PaginationPrevious
+                            onClick={() => navigateToPage(Math.max(page - 1, 1))}
+                            aria-disabled={page === 1 || isPending}
+                            className={cn(
+                                "transition-colors",
+                                page === 1 || isPending
+                                    ? "opacity-40 cursor-not-allowed text-zinc-400 dark:text-zinc-600"
+                                    : "cursor-pointer text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                            )}
+                        />
                     </PaginationItem>
+
+                    {/* PAGES */}
                     {renderPageNumbers()}
+
+                    {/* NEXT */}
                     <PaginationItem>
-                        {navigationMode === "router" ? (
-                            <PaginationNext
-                                onClick={() =>
-                                    navigateToPage(Math.min(page + 1, totalPageCount))
-                                }
-                                aria-disabled={page === totalPageCount || isPending}
-                                tabIndex={page === totalPageCount || isPending ? -1 : undefined}
-                                className={cn(
-                                    page === totalPageCount || isPending
-                                        ? "pointer-events-none opacity-50"
-                                        : "cursor-pointer"
-                                )}
-                            />
-                        ) : (
-                            <PaginationNext
-                                href={buildLink(Math.min(page + 1, totalPageCount))}
-                                aria-disabled={page === totalPageCount}
-                                tabIndex={page === totalPageCount ? -1 : undefined}
-                                className={
-                                    page === totalPageCount
-                                        ? "pointer-events-none opacity-50"
-                                        : undefined
-                                }
-                            />
-                        )}
+                        <PaginationNext
+                            onClick={() => navigateToPage(Math.min(page + 1, totalPageCount))}
+                            aria-disabled={page === totalPageCount || isPending}
+                            className={cn(
+                                "transition-colors",
+                                page === totalPageCount || isPending
+                                    ? "opacity-40 cursor-not-allowed text-zinc-400 dark:text-zinc-600"
+                                    : "cursor-pointer text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                            )}
+                        />
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>
-        </div>
-    );
-}
-
-function SelectRowsPerPage({
-                               options,
-                               setPageSize,
-                               pageSize,
-                           }: {
-    options: number[];
-    setPageSize: (newSize: number) => void;
-    pageSize: number;
-}) {
-    return (
-        <div className="flex items-center gap-4">
-            <span className="whitespace-nowrap text-sm">Rows per page</span>
-
-            <Select
-                value={String(pageSize)}
-                onValueChange={(value) => setPageSize(Number(value))}
-            >
-                <SelectTrigger>
-                    <SelectValue placeholder="Select page size">
-                        {String(pageSize)}
-                    </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                    {options.map((option) => (
-                        <SelectItem key={option} value={String(option)}>
-                            {option}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
         </div>
     );
 }
