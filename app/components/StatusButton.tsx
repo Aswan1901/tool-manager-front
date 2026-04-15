@@ -3,9 +3,9 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const statuses = [
-    { key: "active", color: "bg-green-500/10 text-green-400 border-green-500/20" },
-    { key: "unused", color: "bg-zinc-500/10 text-zinc-400 border-zinc-500/20" },
-    { key: "expiring", color: "bg-orange-500/10 text-orange-400 border-orange-500/20" },
+    { key: "active", color: "bg-green-500/15 text-green-400 border-green-500/20" },
+    { key: "unused", color: "bg-zinc-500/10 text-zinc-500 border-zinc-300 dark:border-zinc-700" },
+    { key: "expiring", color: "bg-orange-500/15 text-orange-400 border-orange-500/20" },
 ];
 
 export default function StatusFilter() {
@@ -42,10 +42,13 @@ export default function StatusFilter() {
         <div className="flex justify-center">
             <div className="
         w-80 p-5 rounded-2xl
-        bg-zinc-900 border border-zinc-800
-        shadow-md shadow-black/20
+        bg-white dark:bg-zinc-900
+        border border-zinc-200 dark:border-zinc-800
+        shadow-sm dark:shadow-black/30
       ">
-                <div className="text-sm text-zinc-400 mb-4">Status</div>
+                <div className="text-sm text-zinc-500 dark:text-zinc-400 mb-4">
+                    Status
+                </div>
 
                 <div className="flex flex-wrap gap-2">
                     {statuses.map(({ key, color }) => {
@@ -56,18 +59,10 @@ export default function StatusFilter() {
                                 key={key}
                                 onClick={() => handleStatusChange(key)}
                                 className={`
-                  px-3 py-1.5 rounded-full text-sm capitalize
-                  border transition-all duration-200
-
-                  ${isActive
-                                    ? `${color} shadow-inner`
-                                    : "bg-zinc-800 text-zinc-400 border-zinc-700 hover:bg-zinc-700 hover:text-white"
-                                }
-
-                  hover:-translate-y-[1px]
-                `}
-                            >
-                                {key}
+                  px-3 py-1.5 rounded-full text-sm capitalize border
+                  transition-all duration-200
+                  ${isActive ? `${color} shadow-sm` : "bg-zinc-100 text-zinc-600 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-700"}
+                  hover:-translate-y-[1px]`}>{key}
                             </button>
                         );
                     })}

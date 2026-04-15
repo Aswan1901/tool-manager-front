@@ -1,7 +1,7 @@
 import StatCard from "../components/StatCard"
 import ToolsTable from "../components/ToolsTable"
 import { TrendingUp, Wrench, Building2, Users } from "lucide-react"
-import ProgressBar from "@/app/components/progressBar"
+import ProgressBar from "@/app/components/ProgressBar"
 
 export default async function Dashboard(props: {
     searchParams?: Promise<{
@@ -20,7 +20,7 @@ export default async function Dashboard(props: {
     const cost = data.cost_analytics
 
     return (
-        <div className="min-h-screen p-4 md:p-8 text-white bg-black">
+        <div className="min-h-screen p-4 md:p-8 text-white">
             <h1 className="mt-16 md:mt-10 text-2xl md:text-[30px] font-bold">
                 Internal Tools Dashboard
             </h1>
