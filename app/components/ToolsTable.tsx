@@ -58,8 +58,6 @@ export default function ToolsTable({
                             users={tool.active_users_count}
                             cost={tool.monthly_cost}
                             status={tool.status}
-
-
                         />
                     ))}
                     </tbody>
