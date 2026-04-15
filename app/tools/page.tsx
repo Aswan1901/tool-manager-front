@@ -63,10 +63,10 @@ export default function ToolsPage() {
     const paginated = filtered.slice(start, start + PAGE_SIZE)
 
     return (
-        <div className="min-h-screen p-4 md:p-8 text-white bg-black">
+        <div className="min-h-screen p-4 md:p-8 text-white ">
             <div className="flex items-center justify-between mt-16 md:mt-10 mb-6">
                 <div>
-                    <h1 className="text-3xl md:text-5xl font-semibold mt-5">Tools</h1>
+                    <h1 className="text-3xl md:text-5xl font-semibold mt-5 text-black dark:text-white">Tools</h1>
                     <p className="mt-1 text-sm text-zinc-400">{filtered.length} tools found</p>
                   <div className="flex justify-center"> <StatusButton/></div>
                 </div>

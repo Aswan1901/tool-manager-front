@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import Search from './Search';
-
+import ModeToggle from "@/app/components/ModeToggle";
 const links = [
     { name: 'Dashboard', href: '/dashboard' },
     { name: 'Tools',     href: '/tools' },
@@ -23,11 +23,12 @@ function NavLinks({ onClose }: { onClose?: () => void }) {
                     href={link.href}
                     onClick={onClose}
                     className={clsx(
-                        'flex h-[48px] items-center rounded-md px-3 text-sm font-medium hover:bg-white/10 hover:text-white transition-colors',
+                        'flex h-[48px] items-center rounded-md px-3 text-sm font-medium transition-colors',
+                        'hover:bg-zinc-200 dark:hover:bg-white/10',
                         {
-                            'bg-white/10 text-white': pathname === link.href,
-                            'text-gray-400': pathname !== link.href,
-                        },
+                            'bg-zinc-200 dark:bg-white/10': pathname === link.href,
+                            'text-zinc-500 dark:text-zinc-400': pathname !== link.href,
+                        }
                     )}
                 >
                     {link.name}
@@ -78,7 +79,7 @@ export default function Nav() {
     const [mobileOpen, setMobileOpen] = useState(false);
 
     return (
-        <nav className="fixed top-0 w-full z-40 bg-black border-b border-gray-700 text-white">
+        <nav className="fixed top-0 w-full z-40 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black text-black dark:text-white">
 
             {/* Barre principale */}
             <div className="flex items-center justify-between py-4 px-6">
@@ -99,7 +100,8 @@ export default function Nav() {
                     <div className="w-48 lg:w-64">
                         <Search placeholder="Search tools..." />
                     </div>
-                    <Moon className="w-5 text-gray-400 hover:text-white cursor-pointer hidden md:block" />
+                    {/*<Moon className="w-5 text-gray-400 hover:text-white cursor-pointer hidden md:block" />*/}
+                    <ModeToggle/>
                     <Bell className="w-5 text-gray-400 hover:text-white cursor-pointer hidden md:block" />
                     <UserDropdown />
 
@@ -115,8 +117,7 @@ export default function Nav() {
 
             {/* Menu mobile déroulant */}
             {mobileOpen && (
-                <div className="md:hidden flex flex-col px-4 pb-4 gap-1 border-t border-gray-700">
-                    <NavLinks onClose={() => setMobileOpen(false)} />
+                <div className="absolute right-0 mt-2 w-48 rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 py-1 z-50">                    <NavLinks onClose={() => setMobileOpen(false)} />
                     <div className="flex items-center gap-4 pt-3 px-1">
                         <Moon className="w-5 text-gray-400" />
                         <Bell className="w-5 text-gray-400" />

@@ -17,14 +17,15 @@ export default function Row({id,tool, dept, users, cost, status}: {
     return (
         <tr
             className="
-      border-b border-zinc-800 last:border-none
-      transition-all duration-200
-      hover:bg-zinc-800/60
-    "
+    border-b border-zinc-200 dark:border-zinc-800
+    text-zinc-900 dark:text-zinc-100
+    transition-all duration-200
+    hover:bg-zinc-100 dark:hover:bg-zinc-800/60
+  "
         >
             <td className="py-4">{id}</td>
             <td className="py-4">{tool}</td>
-            <td className="py-4 text-zinc-400">{dept}</td>
+            <td className="py-4 ">{dept}</td>
             <td className="py-4">{users}</td>
             <td className="py-4">{cost}</td>
 
