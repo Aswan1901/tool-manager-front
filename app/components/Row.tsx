@@ -15,19 +15,27 @@ export default function Row({id,tool, dept, users, cost, status}: {
     }
 
     return (
-        <tr className="border-b border-zinc-800 last:border-none">
+        <tr
+            className="
+      border-b border-zinc-800 last:border-none
+      transition-all duration-200
+      hover:bg-zinc-800/60
+    "
+        >
             <td className="py-4">{id}</td>
             <td className="py-4">{tool}</td>
             <td className="py-4 text-zinc-400">{dept}</td>
             <td className="py-4">{users}</td>
             <td className="py-4">{cost}</td>
+
             <td className="py-4 text-right">
-            <span className={`rounded-full px-3 py-1 text-xs font-semibold ${statusStyles[status]}`}>
-              {status}
-            </span>
+      <span className={`rounded-full px-3 py-1 text-xs font-semibold ${statusStyles[status]}`}>
+        {status}
+      </span>
             </td>
-            <td className="py-4 flex justify-center">
-                <div className="flex justify-end gap-3">
+
+            <td className="py-4">
+                <div className="flex justify-center gap-3">
                     <button className="text-zinc-400 hover:text-white transition-colors">
                         <SquarePen className="size-5" />
                     </button>

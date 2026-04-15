@@ -5,10 +5,7 @@ import Row from "./Row"
 import PaginationWithLinks from "./PaginationComponent"
 import {SquarePen, Trash2, Eye} from "lucide-react";
 
-export default function ToolsTable({
-                                       query,
-                                       currentPage,
-                                   }: {
+export default function ToolsTable({query, currentPage,}: {
     query: string,
     currentPage: number
 }) {
@@ -34,7 +31,6 @@ export default function ToolsTable({
 
     return (
         <div className="rounded-2xl bg-zinc-950 p-4 md:p-6 text-white shadow-lg">
-
             {/* Desktop : tableau classique */}
             <div className="hidden md:block">
                 <table className="w-full border-collapse text-sm">
