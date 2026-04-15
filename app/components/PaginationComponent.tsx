@@ -30,34 +30,9 @@ export interface PaginationWithLinksProps {
     pageSize: number;
     page: number;
     pageSearchParam?: string;
-    /**
-     * Navigation mode: 'link' uses Next.js Link components, 'router' uses router.push with loading states
-     * @default 'link'
-     */
     navigationMode?: "link" | "router";
 }
 
-/**
- * Navigate with Nextjs links or router.push with loading states
- *
- * @example
- * ```
- * // Using Link navigation (default)
- * <PaginationWithLinks
- page={1}
- pageSize={20}
- totalCount={500}
- />
- *
- * // Using router.push with loading states
- * <PaginationWithLinks
- page={1}
- pageSize={20}
- totalCount={500}
- navigationMode="router"
- />
- * ```
- */
 export default function PaginationWithLinks({
                                         pageSizeSelectOptions,
                                         pageSize,
